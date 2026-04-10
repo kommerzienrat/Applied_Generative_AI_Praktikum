@@ -1,96 +1,100 @@
-# Praktikum Notebooks: Lokal und Google Colab Quickstart
+# Praktikum Notebooks: local and Google Colab quickstart
 
-Dieses Repository enthaelt 5 Jupyter-Notebooks fuer das Praktikum:
+This repository contains 5 practical Jupyter notebooks:
 
-- P01_Entwicklungsumgebung.ipynb
-- P02_Tokenizer_Embeddings_MLP.ipynb
-- P03_Transformer_Attention.ipynb
-- P04_Halluzinationen_Perplexity.ipynb
-- P05_Prompting_InContextLearning.ipynb
+- `P01_Entwicklungsumgebung.ipynb`
+- `P02_Tokenizer_Embeddings_MLP.ipynb`
+- `P03_Transformer_Attention.ipynb`
+- `P04_Halluzinationen_Perplexity.ipynb`
+- `P05_Prompting_InContextLearning.ipynb`
 
-## 1) Lokaler Start (empfohlen)
+## 1) Local start
 
-### Voraussetzungen
+### Requirements
 
 - Python 3.11+
-- Jupyter Notebook oder Jupyter Lab
-- Optional fuer LLM-Notebooks: Ollama
+- Jupyter Notebook or JupyterLab
+- Ollama for `P01`, `P04`, and `P05`
 
-### Setup
+### Minimal setup
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip
-pip install jupyter ipykernel
+python -m pip install jupyterlab ipykernel
 ```
 
-Optionaler Kernel-Name:
+Optional kernel registration:
 
 ```bash
 python -m ipykernel install --user --name praktikum-llm --display-name "Python (praktikum-llm)"
 ```
 
-Dann Jupyter starten:
+Start Jupyter:
 
 ```bash
 jupyter lab
 ```
 
-Hinweis: Die Setup-Zellen in den Notebooks installieren fehlende Pakete versionsfixiert nach.
+### Notebook package installation behavior
 
-## 2) Google Colab Start
+All notebooks install missing Python packages from their setup cells with this fallback order:
 
-### Fuer P02 und P03
+1. `python -m uv pip install --system ...`
+2. `uv pip install --system ...`
+3. `python -m pip install --break-system-packages ...`
 
-Diese Notebooks benoetigen keinen Remote-LLM-Endpoint.
-Einfach Notebook oeffnen und die Setup-Zelle ausfuehren.
+## 2) Google Colab start
 
-### Fuer P04 und P05
+### `P02` and `P03`
 
-Es gibt zwei zulaessige Modi in Colab:
+These notebooks do not require an LLM endpoint.
+Open the notebook and run the setup cell.
 
-1. Remote OpenAI-kompatibler Endpoint
+### `P01`, `P04`, and `P05`
 
-Setze in der ersten Colab-Startzelle vor der Setup-Ausfuehrung:
+The default mode is local Ollama inside the notebook session.
+
+- If no `LLM_BASE_URL` is set, the notebook uses local Ollama.
+- In Colab, the setup cell installs Ollama when needed, starts `ollama serve`, and pulls the default model automatically.
+- The default model is `qwen3.5:0.8b`.
+
+Optional remote override for `P04` and `P05`:
 
 ```python
 import os
-os.environ["LLM_BASE_URL"] = "https://<dein-endpoint>/v1"
+os.environ["LLM_BASE_URL"] = "https://<your-endpoint>/v1"
 os.environ["LLM_API_KEY"] = "<optional>"
-os.environ["LLM_MODEL"] = "qwen2.5:7b"
+os.environ["LLM_MODEL"] = "qwen3.5:0.8b"
 ```
 
-1. Lokales Ollama in Colab
+## 3) `P01` bootstrap behavior
 
-- Kein `LLM_BASE_URL` setzen.
-- `ollama serve` muss in der Colab-Session laufen und ein Modell verfuegbar sein.
-- Falls lokales Ollama nicht erreichbar ist, erscheint ein klarer Hinweis im Notebook.
+`P01` does bootstrap Ollama in the notebook, but only for the Colab/local-host path.
 
-## 3) P01 Besonderheit in Colab
+- In Colab, the setup cell installs Ollama if needed, starts the server, and pulls `qwen3.5:0.8b`.
+- On a local machine, `P01` expects the Ollama binary to already be installed.
+- After setup, the notebook runs directly against the local Ollama API and Python client without skip logic.
 
-P01 nutzt die Ollama-REST-API direkt.
-In Colab ist localhost normalerweise nicht erreichbar.
-Setze deshalb:
+Optional local pre-install command:
 
-```python
-import os
-os.environ["OLLAMA_BASE_URL"] = "https://<dein-ollama-host>"
-os.environ["LLM_MODEL"] = "qwen2.5:7b"
+```bash
+ollama pull qwen3.5:0.8b
+ollama serve
 ```
 
-Wenn kein externer Ollama-Host vorhanden ist, werden API-Teile im Notebook sauber uebersprungen.
+## 4) Runtime behavior
 
-## 4) Erwartetes Verhalten bei Fehlern
+- Missing Python packages are installed from the setup cells.
+- `P01`, `P04`, and `P05` no longer use “skip” cells for missing Ollama/API access.
+- LLM/API cells are expected to run directly after the setup cell succeeded.
+- The optional reasoning section in `P04` still requires a separate reasoning model if that section is executed.
 
-- Fehlende Pakete: werden in den Setup-Zellen automatisch installiert (wenn aktiviert).
-- Fehlender Endpoint in Colab (P04/P05): es wird lokales Ollama versucht; bei Fehlschlag kommt ein klarer Runtime-Hinweis.
-- Lokales Ollama nicht erreichbar (P01/P04/P05): klare Hinweise und ueberspringbare Demonstrationszellen.
+## 5) Recommended order
 
-## 5) Empfohlene Ausfuehrungsreihenfolge
-
-1. P01_Entwicklungsumgebung.ipynb
-2. P02_Tokenizer_Embeddings_MLP.ipynb
-3. P03_Transformer_Attention.ipynb
-4. P04_Halluzinationen_Perplexity.ipynb
-5. P05_Prompting_InContextLearning.ipynb
+1. `P01_Entwicklungsumgebung.ipynb`
+2. `P02_Tokenizer_Embeddings_MLP.ipynb`
+3. `P03_Transformer_Attention.ipynb`
+4. `P04_Halluzinationen_Perplexity.ipynb`
+5. `P05_Prompting_InContextLearning.ipynb`
