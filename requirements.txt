@@ -2,9 +2,10 @@ bertviz==1.4.1
 gensim==4.4.0
 matplotlib==3.10.8
 numpy==2.4.4
+ollama==0.6.1
 pandas==3.0.2
-Requests==2.33.1
-scikit_learn==1.8.0
+requests==2.33.1
+scikit-learn==1.8.0
 seaborn==0.13.2
 tiktoken==0.12.0
 torch==2.11.0

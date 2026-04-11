@@ -45,6 +45,8 @@ All notebooks install missing Python packages from their setup cells with this f
 2. `uv pip install --system ...`
 3. `python -m pip install --break-system-packages ...`
 
+If the notebook already runs inside an active `uv`-managed `.venv`, the setup cell installs directly into that interpreter instead of using `--system`.
+
 ## 2) Google Colab start
 
 ### `P02` and `P03`
@@ -59,6 +61,7 @@ The default mode is local Ollama inside the notebook session.
 - If no `LLM_BASE_URL` is set, the notebook uses local Ollama.
 - In Colab, the setup cell installs Ollama when needed, starts `ollama serve`, and pulls the default model automatically.
 - The default model is `qwen3.5:0.8b`.
+- Thinking is disabled by default and only enabled in the sections where reasoning is part of the exercise.
 
 Optional remote override for `P04` and `P05`:
 
@@ -89,6 +92,8 @@ ollama serve
 - Missing Python packages are installed from the setup cells.
 - `P01`, `P04`, and `P05` no longer use “skip” cells for missing Ollama/API access.
 - LLM/API cells are expected to run directly after the setup cell succeeded.
+- `P04` enables thinking only in the optional reasoning-model comparison.
+- `P05` enables thinking only in the Chain-of-Thought section.
 - The optional reasoning section in `P04` still requires a separate reasoning model if that section is executed.
 
 ## 5) Recommended order
