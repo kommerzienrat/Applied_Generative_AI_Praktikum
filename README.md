@@ -1,105 +1,156 @@
-# Praktikum Notebooks: local and Google Colab quickstart
+# Praktikum: Applied Generative AI – NLP
 
-This repository contains 5 practical Jupyter notebooks:
+Dieses Repository enthält die Jupyter-Notebooks für das Praktikum im Sommersemester 2026. Die Materialien decken den Bogen von Entwicklungsumgebung, Transformer-Grundlagen und Prompting bis hin zu RAG, Agenten, Security, Evaluation und Deployment ab.
 
-- `P01_Entwicklungsumgebung.ipynb`
-- `P02_Tokenizer_Embeddings_MLP.ipynb`
-- `P03_Transformer_Attention.ipynb`
-- `P04_Halluzinationen_Perplexity.ipynb`
-- `P05_Prompting_InContextLearning.ipynb`
+## Inhalte
 
-## 1) Local start
+- `P01_Entwicklungsumgebung.ipynb`: Setup, Ollama-Grundlagen und erste lokale Modellaufrufe.
+- `P02_Tokenizer_Embeddings_MLP.ipynb`: Tokenisierung, Embeddings und ein kompaktes MLP-Beispiel.
+- `P03_Transformer_Attention.ipynb`: Attention-Mechanismen, Transformer-Bausteine und Visualisierung.
+- `P04_Halluzinationen_Perplexity.ipynb`: Halluzinationen, Perplexity und reasoning-nahe Modellvergleiche.
+- `P05_Prompting_InContextLearning.ipynb`: Prompt-Engineering, In-Context Learning und Chain-of-Thought.
+- `P06_WebScraping_Embeddings.ipynb`: Web-Scraping, Chunking und Embedding-Engineering.
+- `P07_Vektordatenbanken_RAG.ipynb`: ChromaDB, Retrieval-Pipelines und faktentreues RAG.
+- `P08_Reasoning_Agenten.ipynb`: ReAct, Reflection und einfache Agenten-Architekturen.
+- `P09_AdvancedAgents_Security.ipynb`: Red Teaming, Prompt Injection und Moderations-Layer.
+- `P10_Evaluation_Benchmarks.ipynb`: Golden Datasets, Faithfulness und Benchmarking von RAG-Systemen.
+- `P11_Deployment_Quantization.ipynb`: Modelfiles, API-Wrapper und Deployment-Konzepte.
+- `P12_Zusammenfassung_Wiederholung.ipynb`: Capstone-Session, Architekturreflexion und Semester-Review.
 
-### Requirements
+## Ausfuehrungswege
 
-- Python 3.11+
-- Jupyter Notebook or JupyterLab
-- Ollama for `P01`, `P04`, and `P05`
+Die Notebooks sind fuer zwei Nutzungsszenarien gedacht:
 
-### Minimal setup
+- lokal mit `uv`, virtuellem Environment und Jupyter
+- in Google Colab fuer die fruehen, nicht lokal gebundenen Uebungen
+
+In beiden Faellen gilt:
+
+- Die Notebooks sollen mit `Run All` von oben nach unten durchlaufen koennen, wenn alle Voraussetzungen erfuellt sind.
+- Wesentliche Fehler duerfen nicht verschleiert oder stillschweigend uebersprungen werden.
+- Installationen innerhalb der Notebooks sollen ueber `uv` erfolgen.
+- Die Materialien sollen auf Standard-Laptops ohne GPU lauffaehig bleiben.
+- Zielplattform ist auch Python 3.13.
+
+## Lokaler Start mit uv
+
+### Voraussetzungen
+
+- Python 3.11 bis 3.13
+- `uv`
+- JupyterLab oder Jupyter Notebook
+- Ollama fuer alle LLM-bezogenen Notebooks
+
+### Empfohlenes Setup
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-python -m pip install --upgrade pip
-python -m pip install jupyterlab ipykernel
+python -m pip install --upgrade pip uv
+uv pip install -r requirements.txt jupyterlab ipykernel nbconvert
 ```
 
-Optional kernel registration:
+Optionales Kernel-Setup:
 
 ```bash
-python -m ipykernel install --user --name praktikum-llm --display-name "Python (praktikum-llm)"
+python -m ipykernel install --user --name praktikum --display-name "Python (praktikum)"
 ```
 
-Start Jupyter:
+Jupyter starten:
 
 ```bash
 jupyter lab
 ```
 
-### Notebook package installation behavior
+### Paketinstallation in lokalen Notebooks
 
-All notebooks install missing Python packages from their setup cells with this fallback order:
+Wenn ein Notebook weitere Abhaengigkeiten nachinstallieren muss, ist `uv` das primaere Werkzeug:
 
-1. `python -m uv pip install --system ...`
-2. `uv pip install --system ...`
-3. `python -m pip install --break-system-packages ...`
+- innerhalb einer aktiven virtuellen Umgebung: `uv pip install ...`
+- ausserhalb einer virtuellen Umgebung: `uv pip install --system ...`
 
-If the notebook already runs inside an active `uv`-managed `.venv`, the setup cell installs directly into that interpreter instead of using `--system`.
+Fehlende Voraussetzungen sollen einen harten Fehler erzeugen, statt nur als Warnung ausgegeben zu werden.
 
-## 2) Google Colab start
+## Google Colab
 
-### `P02` and `P03`
+P01 bis P05 lassen sich auch in Colab als eigenstaendige Arbeitsblaetter bearbeiten. Fuer P06 bis P12 ist die Referenzausfuehrung derzeit lokal vorgesehen, weil diese Notebooks einen lokalen Ollama-Dienst ueber `OLLAMA_BASE_URL` voraussetzen und bei entfernten Hosts absichtlich mit einem harten Fehler abbrechen.
 
-These notebooks do not require an LLM endpoint.
-Open the notebook and run the setup cell.
+### Voraussetzungen in Colab
 
-### `P01`, `P04`, and `P05`
+- Python-Runtime in Colab
+- Installation der benoetigten Pakete ueber `uv`
+- fuer geeignete LLM-Notebooks: ein erreichbarer Modellzugang fuer die konkrete Uebung
 
-The default mode is local Ollama inside the notebook session.
+### Minimaler Colab-Start
 
-- If no `LLM_BASE_URL` is set, the notebook uses local Ollama.
-- In Colab, the setup cell installs Ollama when needed, starts `ollama serve`, and pulls the default model automatically.
-- The default model is `qwen3.5:0.8b`.
-- Thinking is disabled by default and only enabled in the sections where reasoning is part of the exercise.
-
-Optional remote override for `P04` and `P05`:
-
-```python
-import os
-os.environ["LLM_BASE_URL"] = "https://<your-endpoint>/v1"
-os.environ["LLM_API_KEY"] = "<optional>"
-os.environ["LLM_MODEL"] = "qwen3.5:0.8b"
+```bash
+!pip install -q uv
+!uv pip install --system -r requirements.txt jupyterlab ipykernel nbconvert
 ```
 
-## 3) `P01` bootstrap behavior
+Fuer Notebooks mit LLM- oder Embedding-Zugriff muessen zusaetzlich die benoetigten Modelle verfuegbar sein. Je nach Notebook ist das typischerweise:
 
-`P01` does bootstrap Ollama in the notebook, but only for the Colab/local-host path.
+```bash
+!ollama pull qwen3.5:0.8b
+!ollama pull nomic-embed-text
+```
 
-- In Colab, the setup cell installs Ollama if needed, starts the server, and pulls `qwen3.5:0.8b`.
-- On a local machine, `P01` expects the Ollama binary to already be installed.
-- After setup, the notebook runs directly against the local Ollama API and Python client without skip logic.
+Wichtig: Die spaeteren Ollama-Notebooks P06 bis P12 verwenden aktuell keinen generischen Remote-Endpoint ueber `LLM_BASE_URL`, sondern pruefen explizit auf einen lokalen Ollama-Dienst unter `OLLAMA_BASE_URL`.
 
-Optional local pre-install command:
+Auch in Colab gilt: Wenn Modelle, Bibliotheken oder Dienste fehlen, soll das Notebook mit einem klaren Fehler abbrechen.
+
+## Ollama-Setup
+
+Mehrere Notebooks erwarten einen laufenden Ollama-Dienst sowie kleine Modelle, damit die Uebungen auf Standard-Laptops fluesig bleiben. Fuer P06 bis P12 ist aktuell eine lokale Ollama-Instanz Teil der Voraussetzungen.
 
 ```bash
 ollama pull qwen3.5:0.8b
+ollama pull nomic-embed-text
 ollama serve
 ```
 
-## 4) Runtime behavior
+Hinweise:
 
-- Missing Python packages are installed from the setup cells.
-- `P01`, `P04`, and `P05` no longer use “skip” cells for missing Ollama/API access.
-- LLM/API cells are expected to run directly after the setup cell succeeded.
-- `P04` enables thinking only in the optional reasoning-model comparison.
-- `P05` enables thinking only in the Chain-of-Thought section.
-- The optional reasoning section in `P04` still requires a separate reasoning model if that section is executed.
+- `qwen3.5:0.8b` wird in mehreren Chat-, Prompting-, Agenten- und Evaluationsnotebooks verwendet.
+- `nomic-embed-text` wird für Embeddings, Retrieval und RAG benötigt.
+- Die Ollama-CLI-Version und die Python-Bibliothek sollen konsistent gehalten werden.
+- Einzelne Notebooks erzeugen zusätzlich lokale Artefakte wie persistente ChromaDB-Verzeichnisse oder Modelfiles im Arbeitsverzeichnis.
 
-## 5) Recommended order
+## Arbeitsweise der Notebooks
+
+- Notebooks sollen von oben nach unten mit `Run All` ausführbar sein, sofern die Voraussetzungen erfüllt sind.
+- Wesentliche Fehler sollen nicht verschleiert werden. Fehlende Pakete, Modelle oder Dienste sind zu beheben, statt Zellen stillschweigend zu überspringen.
+- Installationen innerhalb der Notebooks sollen über `uv` erfolgen: in virtuellen Umgebungen mit `uv pip install`, außerhalb davon mit `uv pip install --system`.
+- Original-Notebooks sollen ohne Outputs und ohne Execution Counts im Repository liegen. Getestete Varianten gehören in separate Dateien wie `*_tested.ipynb`.
+
+## Hinweise fuer Maintainer
+
+- Dokumentation und Notebook-Inhalt sollen die Vorgaben aus `AGENTS.md` einhalten.
+- Neue Notebooks sollen inhaltlich am Semesterplan ausgerichtet und auf Linux, macOS, Windows und Colab nutzbar sein.
+- Vor Freigabe sollte jedes Notebook einmal komplett in sauberer Umgebung getestet werden.
+
+## Empfohlene Reihenfolge
 
 1. `P01_Entwicklungsumgebung.ipynb`
 2. `P02_Tokenizer_Embeddings_MLP.ipynb`
 3. `P03_Transformer_Attention.ipynb`
 4. `P04_Halluzinationen_Perplexity.ipynb`
 5. `P05_Prompting_InContextLearning.ipynb`
+6. `P06_WebScraping_Embeddings.ipynb`
+7. `P07_Vektordatenbanken_RAG.ipynb`
+8. `P08_Reasoning_Agenten.ipynb`
+9. `P09_AdvancedAgents_Security.ipynb`
+10. `P10_Evaluation_Benchmarks.ipynb`
+11. `P11_Deployment_Quantization.ipynb`
+12. `P12_Zusammenfassung_Wiederholung.ipynb`
+
+## Projektstruktur
+
+- `data/`: optionale Datenablage und lokale Arbeitsartefakte.
+- `exportToHTML/`: optionale HTML-Exporte der Notebooks, wird bei Bedarf erzeugt.
+- `requirements.txt`: zentrale Python-Abhängigkeiten für das Praktikum.
+- `pyproject.toml`: Projektmetadaten und zusätzliche Python-Abhängigkeiten.
+
+## Hinweis zu Colab
+
+Die Notebooks sind didaktisch so angelegt, dass sie auch außerhalb einer GPU-Umgebung nutzbar bleiben. Die Referenzausfuehrung ist fuer P01 bis P05 lokal oder in Colab moeglich; ab P06 ist aktuell ein lokaler Ollama-Dienst Teil der vorgesehenen Ausfuehrung.
