@@ -4,32 +4,34 @@ Dieses Repository enthält die Jupyter-Notebooks für das Praktikum im Sommersem
 
 ## Inhalte
 
-- `P01_Entwicklungsumgebung.ipynb`: Setup, Ollama-Grundlagen und erste lokale Modellaufrufe.
-- `P02_Tokenizer_Embeddings_MLP.ipynb`: Tokenisierung, Embeddings und ein kompaktes MLP-Beispiel.
-- `P03_Transformer_Attention.ipynb`: Attention-Mechanismen, Transformer-Bausteine und Visualisierung.
-- `P04_Halluzinationen_Perplexity.ipynb`: Halluzinationen, Perplexity und reasoning-nahe Modellvergleiche.
-- `P05_Prompting_InContextLearning.ipynb`: Prompt-Engineering, In-Context Learning und Chain-of-Thought.
-- `P06_WebScraping_Embeddings.ipynb`: Web-Scraping, Chunking und Embedding-Engineering.
-- `P07_Vektordatenbanken_RAG.ipynb`: ChromaDB, Retrieval-Pipelines und faktentreues RAG.
-- `P08_Reasoning_Agenten.ipynb`: ReAct, Reflection und einfache Agenten-Architekturen.
-- `P09_AdvancedAgents_Security.ipynb`: Red Teaming, Prompt Injection und Moderations-Layer.
-- `P10_Evaluation_Benchmarks.ipynb`: Golden Datasets, Faithfulness und Benchmarking von RAG-Systemen.
-- `P11_Deployment_Quantization.ipynb`: Modelfiles, API-Wrapper und Deployment-Konzepte.
-- `P12_Zusammenfassung_Wiederholung.ipynb`: Capstone-Session, Architekturreflexion und Semester-Review.
+| Notebook | Termin | Thema |
+|----------|--------|-------|
+| `P01_Entwicklungsumgebung.ipynb` | 01 | Setup & Ollama-Grundlagen |
+| `P02_Tokenizer_Embeddings_MLP.ipynb` | 02 | Tokenisierung, Embeddings & MLP |
+| `P03_Transformer_Attention.ipynb` | 03 | Transformer-Architektur & Attention |
+| `P04_Halluzinationen_Perplexity.ipynb` | 04 | Halluzinationen & Perplexity |
+| `P05_Prompting_InContextLearning.ipynb` | 05 | Prompt-Engineering & In-Context Learning |
+| `P06_RAG_Systeme.ipynb` | 06 | RAG-Pipeline, ChromaDB, Chunking & Generation |
+| `P07_Finetuning_PEFT.ipynb` | 07 | LoRA, QLoRA & Parameter-Efficient Fine-Tuning |
+| `P08_Hardware_Inferenz.ipynb` | 08 | GPU-Speicher, KV-Cache, Quantisierung |
+| `P09_Agenten_MCP.ipynb` | 09 | ReAct-Pattern & Model Context Protocol |
+| `P10_Evaluation_Benchmarks.ipynb` | 10 | RAG-Evaluation, RAGAS & LLM-as-Judge |
+| `P11_Ethik_Sicherheit_Recht.ipynb` | 11 | EU AI Act, OWASP Top 10, Bias & Datenschutz |
+| `P12_Zusammenfassung_Wiederholung.ipynb` | 12 | Capstone-Session & Semester-Review |
 
-## Ausfuehrungswege
+## Ausführungswege
 
-Die Notebooks sind fuer zwei Nutzungsszenarien gedacht:
+Die Notebooks sind für zwei Nutzungsszenarien gedacht:
 
 - lokal mit `uv`, virtuellem Environment und Jupyter
-- in Google Colab fuer die fruehen, nicht lokal gebundenen Uebungen
+- in Google Colab für die frühen, nicht lokal gebundenen Übungen
 
-In beiden Faellen gilt:
+In beiden Fällen gilt:
 
-- Die Notebooks sollen mit `Run All` von oben nach unten durchlaufen koennen, wenn alle Voraussetzungen erfuellt sind.
-- Wesentliche Fehler duerfen nicht verschleiert oder stillschweigend uebersprungen werden.
-- Installationen innerhalb der Notebooks sollen ueber `uv` erfolgen.
-- Die Materialien sollen auf Standard-Laptops ohne GPU lauffaehig bleiben.
+- Die Notebooks sollen mit `Run All` von oben nach unten durchlaufen können, wenn alle Voraussetzungen erfüllt sind.
+- Wesentliche Fehler dürfen nicht verschleiert oder stillschweigend übersprungen werden.
+- Installationen innerhalb der Notebooks sollen über `uv` erfolgen.
+- Die Materialien sollen auf Standard-Laptops ohne GPU lauffähig bleiben.
 - Zielplattform ist auch Python 3.13.
 
 ## Lokaler Start mit uv
@@ -39,47 +41,90 @@ In beiden Faellen gilt:
 - Python 3.11 bis 3.13
 - `uv`
 - JupyterLab oder Jupyter Notebook
-- Ollama fuer alle LLM-bezogenen Notebooks
+- Ollama für alle LLM-bezogenen Notebooks
 
-### Empfohlenes Setup
+### Installation von uv, pip und Jupyter
 
+#### Option 1: Mit uv (empfohlen)
+
+`uv` ist ein extrem schneller Python-Paketmanager, der Abhängigkeiten effizienter verwaltet als pip.
+
+**Installation von uv:**
 ```bash
-python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip uv
-uv pip install -r requirements.txt jupyterlab ipykernel nbconvert
+# macOS / Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Windows (mit winget)
+winget install AstralEq.uv
 ```
 
-Optionales Kernel-Setup:
-
+**Einrichtung eines Projekts mit Jupyter:**
 ```bash
+# Neues Projekt initialisieren
+uv init mein-projekt
+cd mein-projekt
+
+# Virtuelle Umgebung erstellen und aktivieren
+uv venv
+source .venv/bin/activate  # Linux/macOS
+# oder: .venv\Scripts\activate  # Windows
+
+# Jupyter und Abhängigkeiten installieren
+uv add jupyterlab ipykernel nbconvert
+uv pip install -r requirements.txt
+
+# Jupyter-Kernel registrieren (optional)
 python -m ipykernel install --user --name praktikum --display-name "Python (praktikum)"
-```
 
-Jupyter starten:
-
-```bash
+# Jupyter starten
 jupyter lab
 ```
 
+#### Option 2: Mit pip (traditionell)
+
+Falls Sie pip bevorzugen:
+
+```bash
+# Virtuelle Umgebung erstellen
+python3 -m venv .venv
+source .venv/bin/activate  # Linux/macOS
+# oder: .venv\Scripts\activate  # Windows
+
+# pip und Jupyter installieren
+python -m pip install --upgrade pip
+pip install jupyterlab ipykernel nbconvert -r requirements.txt
+
+# Jupyter-Kernel registrieren (optional)
+python -m ipykernel install --user --name praktikum --display-name "Python (praktikum)"
+
+# Jupyter starten
+jupyter lab
+```
+
+#### Wichtige Hinweise
+
+- **Verwenden Sie virtuelle Umgebungen**, um Abhängigkeitskonflikte zu vermeiden.
+- **`uv` vs. pip**: `uv` ist deutlich schneller und moderner, `pip` ist universell verfügbar.
+- **Colab-spezifisch**: In Google Colab ist `uv` bereits vorinstalliert, kann aber spezielle Umgebungsvariablen benötigen (siehe Colab-Abschnitt).
+
 ### Paketinstallation in lokalen Notebooks
 
-Wenn ein Notebook weitere Abhaengigkeiten nachinstallieren muss, ist `uv` das primaere Werkzeug:
+Wenn ein Notebook weitere Abhängigkeiten nachinstallieren muss, ist `uv` das primäre Werkzeug:
 
 - innerhalb einer aktiven virtuellen Umgebung: `uv pip install ...`
-- ausserhalb einer virtuellen Umgebung: `uv pip install --system ...`
+- außerhalb einer virtuellen Umgebung: `uv pip install --system ...`
 
 Fehlende Voraussetzungen sollen einen harten Fehler erzeugen, statt nur als Warnung ausgegeben zu werden.
 
 ## Google Colab
 
-P01 bis P05 lassen sich auch in Colab als eigenstaendige Arbeitsblaetter bearbeiten. Fuer P06 bis P12 ist die Referenzausfuehrung derzeit lokal vorgesehen, weil diese Notebooks einen lokalen Ollama-Dienst ueber `OLLAMA_BASE_URL` voraussetzen und bei entfernten Hosts absichtlich mit einem harten Fehler abbrechen.
+P01 bis P05 lassen sich auch in Colab als eigenständige Arbeitsblätter bearbeiten. Für P06 bis P12 ist die Referenzausführung derzeit lokal vorgesehen, weil diese Notebooks einen lokalen Ollama-Dienst über `OLLAMA_BASE_URL` voraussetzen und bei entfernten Hosts absichtlich mit einem harten Fehler abbrechen.
 
 ### Voraussetzungen in Colab
 
 - Python-Runtime in Colab
-- Installation der benoetigten Pakete ueber `uv`
-- fuer geeignete LLM-Notebooks: ein erreichbarer Modellzugang fuer die konkrete Uebung
+- Installation der benötigten Pakete über `uv`
+- für geeignete LLM-Notebooks: ein erreichbarer Modellzugang für die konkrete Übung
 
 ### Minimaler Colab-Start
 
@@ -88,25 +133,77 @@ P01 bis P05 lassen sich auch in Colab als eigenstaendige Arbeitsblaetter bearbei
 !uv pip install --system -r requirements.txt jupyterlab ipykernel nbconvert
 ```
 
-Fuer Notebooks mit LLM- oder Embedding-Zugriff muessen zusaetzlich die benoetigten Modelle verfuegbar sein. Je nach Notebook ist das typischerweise:
+**Achtung**: Google Colab setzt spezielle Umgebungsvariablen für `uv`, die zu Problemen führen können. Verwenden Sie folgende Methode für zuverlässige Installation:
+
+```python
+import os
+os.environ["UV_CONSTRAINT"] = ""
+os.environ["UV_BUILD_CONSTRAINT"] = ""
+os.environ["UV_PRERELEASE"] = "if-necessary-or-explicit"
+os.environ["UV_SYSTEM_PYTHON"] = "false"
+
+!uv pip install --system -r requirements.txt jupyterlab ipykernel nbconvert
+```
+
+Für Notebooks mit LLM- oder Embedding-Zugriff müssen zusätzlich die benötigten Modelle verfügbar sein. Je nach Notebook ist das typischerweise:
 
 ```bash
+!curl https://ollama.ai/install.sh | sh
 !ollama pull qwen3.5:0.8b
 !ollama pull nomic-embed-text
 ```
 
-Wichtig: Die spaeteren Ollama-Notebooks P06 bis P12 verwenden aktuell keinen generischen Remote-Endpoint ueber `LLM_BASE_URL`, sondern pruefen explizit auf einen lokalen Ollama-Dienst unter `OLLAMA_BASE_URL`.
+**Ollama in Colab**: Die Installation von Ollama in Colab ist möglich, erfordert aber zusätzliche Schritte. Verwenden Sie für den Remote-Zugriff einen Tunnel-Dienst wie ngrok oder cloudflared.
+
+Wichtig: Die späteren Ollama-Notebooks P06 bis P12 verwenden aktuell keinen generischen Remote-Endpoint über `LLM_BASE_URL`, sondern prüfen explizit auf einen lokalen Ollama-Dienst unter `OLLAMA_BASE_URL`.
 
 Auch in Colab gilt: Wenn Modelle, Bibliotheken oder Dienste fehlen, soll das Notebook mit einem klaren Fehler abbrechen.
 
 ## Ollama-Setup
 
-Mehrere Notebooks erwarten einen laufenden Ollama-Dienst sowie kleine Modelle, damit die Uebungen auf Standard-Laptops fluesig bleiben. Fuer P06 bis P12 ist aktuell eine lokale Ollama-Instanz Teil der Voraussetzungen.
+Mehrere Notebooks erwarten einen laufenden Ollama-Dienst sowie kleine Modelle, damit die Übungen auf Standard-Laptops flüssig bleiben. Für P06 bis P12 ist aktuell eine lokale Ollama-Instanz Teil der Voraussetzungen.
+
+### Lokale Installation (macOS/Linux)
 
 ```bash
+# Ollama installieren (curl erforderlich)
+curl -fsSL https://ollama.com/install.sh | sh
+
+# Modell herunterladen
 ollama pull qwen3.5:0.8b
 ollama pull nomic-embed-text
+
+# Ollama-Server starten
 ollama serve
+```
+
+### Lokale Installation (Windows)
+
+Ollama für Windows kann direkt von [ollama.com](https://ollama.com) heruntergeladen werden.
+
+### Colab-Installation
+
+In Google Colab muss Ollama manuell installiert werden. Zusätzlich wird `zstandard` für erweiterte Funktionalität empfohlen:
+
+```python
+# curl und Ollama installieren
+!pip install -q uv zstandard
+!curl -fsSL https://ollama.com/install.sh | sh
+
+# Modell herunterladen
+!ollama pull qwen3.5:0.8b
+
+# Server im Hintergrund starten
+!nohup ollama serve &
+```
+
+**Alternative mit colab-xterm (funktioniert auch im Free-Tier):**
+```python
+!pip install colab-xterm zstandard
+%load_ext colabxterm
+%xterm
+# Dann im Terminal: curl -fsSL https://ollama.com/install.sh | sh
+# Und: ollama pull qwen3.5:0.8b
 ```
 
 Hinweise:
@@ -123,7 +220,7 @@ Hinweise:
 - Installationen innerhalb der Notebooks sollen über `uv` erfolgen: in virtuellen Umgebungen mit `uv pip install`, außerhalb davon mit `uv pip install --system`.
 - Original-Notebooks sollen ohne Outputs und ohne Execution Counts im Repository liegen. Getestete Varianten gehören in separate Dateien wie `*_tested.ipynb`.
 
-## Hinweise fuer Maintainer
+## Hinweise für Maintainer
 
 - Dokumentation und Notebook-Inhalt sollen die Vorgaben aus `AGENTS.md` einhalten.
 - Neue Notebooks sollen inhaltlich am Semesterplan ausgerichtet und auf Linux, macOS, Windows und Colab nutzbar sein.
@@ -153,4 +250,4 @@ Hinweise:
 
 ## Hinweis zu Colab
 
-Die Notebooks sind didaktisch so angelegt, dass sie auch außerhalb einer GPU-Umgebung nutzbar bleiben. Die Referenzausfuehrung ist fuer P01 bis P05 lokal oder in Colab moeglich; ab P06 ist aktuell ein lokaler Ollama-Dienst Teil der vorgesehenen Ausfuehrung.
+Die Notebooks sind didaktisch so angelegt, dass sie auch außerhalb einer GPU-Umgebung nutzbar bleiben. Die Referenzausführung ist für P01 bis P05 lokal oder in Colab möglich; ab P06 ist aktuell ein lokaler Ollama-Dienst Teil der vorgesehenen Ausführung.
