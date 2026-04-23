@@ -23,8 +23,8 @@ Dieses Repository enthält die Jupyter-Notebooks für das Praktikum im Sommersem
 
 Die Notebooks sind für zwei Nutzungsszenarien gedacht:
 
-- lokal mit `uv`, virtuellem Environment und Jupyter
-- in Google Colab für die frühen, nicht lokal gebundenen Übungen
+- lokal mit `uv`, virtueller Umgebung und Jupyter
+- in Google Colab, sofern das jeweilige Notebook Ollama lokal in der Runtime vorbereitet
 
 In beiden Fällen gilt:
 
@@ -43,7 +43,7 @@ In beiden Fällen gilt:
 - JupyterLab oder Jupyter Notebook
 - Ollama für alle LLM-bezogenen Notebooks
 
-### Installation von uv, pip und Jupyter
+### Installation von uv und Jupyter
 
 #### Option 1: Mit uv (empfohlen)
 
@@ -80,31 +80,10 @@ python -m ipykernel install --user --name praktikum --display-name "Python (prak
 jupyter lab
 ```
 
-#### Option 2: Mit pip (traditionell)
-
-Falls Sie pip bevorzugen:
-
-```bash
-# Virtuelle Umgebung erstellen
-python3 -m venv .venv
-source .venv/bin/activate  # Linux/macOS
-# oder: .venv\Scripts\activate  # Windows
-
-# pip und Jupyter installieren
-python -m pip install --upgrade pip
-pip install jupyterlab ipykernel nbconvert -r requirements.txt
-
-# Jupyter-Kernel registrieren (optional)
-python -m ipykernel install --user --name praktikum --display-name "Python (praktikum)"
-
-# Jupyter starten
-jupyter lab
-```
-
 #### Wichtige Hinweise
 
 - **Verwenden Sie virtuelle Umgebungen**, um Abhängigkeitskonflikte zu vermeiden.
-- **`uv` vs. pip**: `uv` ist deutlich schneller und moderner, `pip` ist universell verfügbar.
+- **`uv` ist Standard**: Paketinstallationen in und außerhalb der Notebooks laufen über `uv`.
 - **Colab-spezifisch**: In Google Colab ist `uv` bereits vorinstalliert, kann aber spezielle Umgebungsvariablen benötigen (siehe Colab-Abschnitt).
 
 ### Paketinstallation in lokalen Notebooks
@@ -118,13 +97,13 @@ Fehlende Voraussetzungen sollen einen harten Fehler erzeugen, statt nur als Warn
 
 ## Google Colab
 
-P01 bis P05 lassen sich auch in Colab als eigenständige Arbeitsblätter bearbeiten. Für P06 bis P12 ist die Referenzausführung derzeit lokal vorgesehen, weil diese Notebooks einen lokalen Ollama-Dienst über `OLLAMA_BASE_URL` voraussetzen und bei entfernten Hosts absichtlich mit einem harten Fehler abbrechen.
+P01 bis P05 lassen sich auch in Colab als eigenständige Arbeitsblätter bearbeiten. Für P06 bis P12 ist die Referenzausführung lokal vorgesehen; diese Notebooks erwarten einen lokalen Ollama-Dienst über `OLLAMA_BASE_URL` und brechen bei entfernten Hosts absichtlich mit einem harten Fehler ab.
 
 ### Voraussetzungen in Colab
 
 - Python-Runtime in Colab
 - Installation der benötigten Pakete über `uv`
-- für geeignete LLM-Notebooks: ein erreichbarer Modellzugang für die konkrete Übung
+- für Ollama-Notebooks: eine Runtime, in der Ollama lokal installiert, gestartet und Modelle geladen werden können
 
 ### Minimaler Colab-Start
 
@@ -153,15 +132,13 @@ Für Notebooks mit LLM- oder Embedding-Zugriff müssen zusätzlich die benötigt
 !ollama pull nomic-embed-text
 ```
 
-**Ollama in Colab**: Die Installation von Ollama in Colab ist möglich, erfordert aber zusätzliche Schritte. Verwenden Sie für den Remote-Zugriff einen Tunnel-Dienst wie ngrok oder cloudflared.
-
-Wichtig: Die späteren Ollama-Notebooks P06 bis P12 verwenden aktuell keinen generischen Remote-Endpoint über `LLM_BASE_URL`, sondern prüfen explizit auf einen lokalen Ollama-Dienst unter `OLLAMA_BASE_URL`.
+**Ollama in Colab**: Die frühen Ollama-Notebooks bootstrapen die lokale Installation direkt in der Runtime. Ein generischer Remote-Endpoint ist nicht Teil des Lehrflows.
 
 Auch in Colab gilt: Wenn Modelle, Bibliotheken oder Dienste fehlen, soll das Notebook mit einem klaren Fehler abbrechen.
 
 ## Ollama-Setup
 
-Mehrere Notebooks erwarten einen laufenden Ollama-Dienst sowie kleine Modelle, damit die Übungen auf Standard-Laptops flüssig bleiben. Für P06 bis P12 ist aktuell eine lokale Ollama-Instanz Teil der Voraussetzungen.
+Mehrere Notebooks erwarten einen laufenden Ollama-Dienst sowie kleine Modelle, damit die Übungen auf Standard-Laptops flüssig bleiben. `P01_Entwicklungsumgebung.ipynb` bootstrappt die CLI, startet den Server und lädt das Standardmodell direkt in der Setup-Zelle. Die späteren Ollama-Notebooks verfahren genauso für ihre jeweils benötigten Modelle.
 
 ### Lokale Installation (macOS/Linux)
 
@@ -218,6 +195,7 @@ Hinweise:
 - Notebooks sollen von oben nach unten mit `Run All` ausführbar sein, sofern die Voraussetzungen erfüllt sind.
 - Wesentliche Fehler sollen nicht verschleiert werden. Fehlende Pakete, Modelle oder Dienste sind zu beheben, statt Zellen stillschweigend zu überspringen.
 - Installationen innerhalb der Notebooks sollen über `uv` erfolgen: in virtuellen Umgebungen mit `uv pip install`, außerhalb davon mit `uv pip install --system`.
+- Ollama-basierte Notebooks verwenden lokales `OLLAMA_BASE_URL` und keine OpenAI-kompatiblen Remote-Fallbacks.
 - Original-Notebooks sollen ohne Outputs und ohne Execution Counts im Repository liegen. Getestete Varianten gehören in separate Dateien wie `*_tested.ipynb`.
 
 ## Hinweise für Maintainer
@@ -233,12 +211,12 @@ Hinweise:
 3. `P03_Transformer_Attention.ipynb`
 4. `P04_Halluzinationen_Perplexity.ipynb`
 5. `P05_Prompting_InContextLearning.ipynb`
-6. `P06_WebScraping_Embeddings.ipynb`
-7. `P07_Vektordatenbanken_RAG.ipynb`
-8. `P08_Reasoning_Agenten.ipynb`
-9. `P09_AdvancedAgents_Security.ipynb`
+6. `P06_RAG_Systeme.ipynb`
+7. `P07_Finetuning_PEFT.ipynb`
+8. `P08_Hardware_Inferenz.ipynb`
+9. `P09_Agenten_MCP.ipynb`
 10. `P10_Evaluation_Benchmarks.ipynb`
-11. `P11_Deployment_Quantization.ipynb`
+11. `P11_Ethik_Sicherheit_Recht.ipynb`
 12. `P12_Zusammenfassung_Wiederholung.ipynb`
 
 ## Projektstruktur
@@ -250,4 +228,4 @@ Hinweise:
 
 ## Hinweis zu Colab
 
-Die Notebooks sind didaktisch so angelegt, dass sie auch außerhalb einer GPU-Umgebung nutzbar bleiben. Die Referenzausführung ist für P01 bis P05 lokal oder in Colab möglich; ab P06 ist aktuell ein lokaler Ollama-Dienst Teil der vorgesehenen Ausführung.
+Die Notebooks sind didaktisch so angelegt, dass sie auch außerhalb einer GPU-Umgebung nutzbar bleiben. Für Ollama-basierte Notebooks ist lokales Ollama Teil der vorgesehenen Ausführung; Remote-Fallbacks sind bewusst nicht vorgesehen.
