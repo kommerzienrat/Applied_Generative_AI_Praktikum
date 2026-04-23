@@ -8,3 +8,19 @@ data/
 dozentenleitfaeden/
 .sisyphus/
 AGENTS.md
+
+# Notebook artifacts
+attention_*.png
+causal_vs_bidirectional.png
+minigpt_training_loss.png
+p05_*.png
+p05_*.csv
+p11_*.png
+perplexity_comparison.png
+positional_encoding.png
+temperature_vs_facts.png
+rag_storage/
+lora_output/
+lora_adapters/
+llama_quantization/
+

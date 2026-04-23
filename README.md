@@ -82,18 +82,19 @@ jupyter lab
 
 #### Wichtige Hinweise
 
-- **Verwenden Sie virtuelle Umgebungen**, um Abhängigkeitskonflikte zu vermeiden.
-- **`uv` ist Standard**: Paketinstallationen in und außerhalb der Notebooks laufen über `uv`.
+- **Virtuelle Umgebungen sind empfohlen**, um Abhängigkeitskonflikte zu vermeiden.
+- **`uv` ist empfohlen**; `pip` ist ebenfalls möglich, wenn Sie lieber mit einer klassischen Venv arbeiten.
 - **Colab-spezifisch**: In Google Colab ist `uv` bereits vorinstalliert, kann aber spezielle Umgebungsvariablen benötigen (siehe Colab-Abschnitt).
 
 ### Paketinstallation in lokalen Notebooks
 
-Wenn ein Notebook weitere Abhängigkeiten nachinstallieren muss, ist `uv` das primäre Werkzeug:
+Wenn ein Notebook weitere Abhängigkeiten nachinstallieren muss, sind folgende Wege praktikabel:
 
-- innerhalb einer aktiven virtuellen Umgebung: `uv pip install ...`
-- außerhalb einer virtuellen Umgebung: `uv pip install --system ...`
+- empfohlen: `uv pip install ...` in einer virtuellen Umgebung
+- alternativ: `pip install ...` in einer virtuellen Umgebung
+- in Colab: `pip install ...` direkt in der Runtime
 
-Fehlende Voraussetzungen sollen einen harten Fehler erzeugen, statt nur als Warnung ausgegeben zu werden.
+Wenn Pakete fehlen, helfen die Setup-Zellen beim Installieren. Eine bestehende Umgebung wird dabei nicht unnötig eingeschränkt.
 
 ## Google Colab
 
@@ -107,12 +108,14 @@ P01 bis P05 lassen sich auch in Colab als eigenständige Arbeitsblätter bearbei
 
 ### Minimaler Colab-Start
 
-```bash
-!pip install -q uv
-!uv pip install --system -r requirements.txt jupyterlab ipykernel nbconvert
+Ein einfacher Start in Colab ist z. B.:
+
+```python
+%pip install -q uv
+%pip install -q -r requirements.txt
 ```
 
-**Achtung**: Google Colab setzt spezielle Umgebungsvariablen für `uv`, die zu Problemen führen können. Verwenden Sie folgende Methode für zuverlässige Installation:
+**Achtung**: Google Colab setzt spezielle Umgebungsvariablen für `uv`, die zu Problemen führen können. Falls `uv` verwendet wird, können folgende Variablen hilfreich sein:
 
 ```python
 import os
@@ -121,7 +124,6 @@ os.environ["UV_BUILD_CONSTRAINT"] = ""
 os.environ["UV_PRERELEASE"] = "if-necessary-or-explicit"
 os.environ["UV_SYSTEM_PYTHON"] = "false"
 
-!uv pip install --system -r requirements.txt jupyterlab ipykernel nbconvert
 ```
 
 Für Notebooks mit LLM- oder Embedding-Zugriff müssen zusätzlich die benötigten Modelle verfügbar sein. Je nach Notebook ist das typischerweise:
@@ -194,7 +196,7 @@ Hinweise:
 
 - Notebooks sollen von oben nach unten mit `Run All` ausführbar sein, sofern die Voraussetzungen erfüllt sind.
 - Wesentliche Fehler sollen nicht verschleiert werden. Fehlende Pakete, Modelle oder Dienste sind zu beheben, statt Zellen stillschweigend zu überspringen.
-- Installationen innerhalb der Notebooks sollen über `uv` erfolgen: in virtuellen Umgebungen mit `uv pip install`, außerhalb davon mit `uv pip install --system`.
+- Installationen innerhalb der Notebooks dürfen über `uv` oder `pip` erfolgen, je nach Umgebung.
 - Ollama-basierte Notebooks verwenden lokales `OLLAMA_BASE_URL` und keine OpenAI-kompatiblen Remote-Fallbacks.
 - Original-Notebooks sollen ohne Outputs und ohne Execution Counts im Repository liegen. Getestete Varianten gehören in separate Dateien wie `*_tested.ipynb`.
 
