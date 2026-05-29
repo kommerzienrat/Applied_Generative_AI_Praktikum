@@ -3,7 +3,9 @@ name = "praktikum"
 version = "0.1.0"
 requires-python = ">=3.11,<3.14"
 dependencies = [
+    "beautifulsoup4==4.14.3",
     "bertviz==1.4.1",
+    "chromadb==1.1.1",
     "gensim==4.4.0",
     "ipykernel>=7.2.0",
     "matplotlib==3.10.8",
