@@ -13,6 +13,7 @@ dependencies = [
     "numpy==2.4.4",
     "ollama==0.6.1",
     "pandas==3.0.2",
+    "pandas-stubs~=3.0.2",
     "pandoc>=2.4",
     "playwright>=1.58.0",
     "requests==2.33.1",
