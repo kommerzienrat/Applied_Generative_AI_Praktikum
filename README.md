@@ -4,20 +4,20 @@ Dieses Repository enthält die Jupyter-Notebooks für das Praktikum im Sommersem
 
 ## Inhalte
 
-| Notebook | Termin | Thema |
-|----------|--------|-------|
-| `P01_Entwicklungsumgebung.ipynb` | 01 | Setup & Ollama-Grundlagen |
-| `P02_Tokenizer_Embeddings_MLP.ipynb` | 02 | Tokenisierung, Embeddings & MLP |
-| `P03_Transformer_Attention.ipynb` | 03 | Transformer-Architektur & Attention |
-| `P04_Halluzinationen_Perplexity.ipynb` | 04 | Halluzinationen & Perplexity |
-| `P05_Prompting_InContextLearning.ipynb` | 05 | Prompt-Engineering & In-Context Learning |
-| `P06_RAG_Systeme.ipynb` | 06 | RAG-Pipeline, ChromaDB, Chunking & Generation |
-| `P07_Finetuning_PEFT.ipynb` | 07 | LoRA, QLoRA & Parameter-Efficient Fine-Tuning |
-| `P08_Hardware_Inferenz.ipynb` | 08 | GPU-Speicher, KV-Cache, Quantisierung |
-| `P09_Agenten_MCP.ipynb` | 09 | ReAct-Pattern & Model Context Protocol |
-| `P10_Evaluation_Benchmarks.ipynb` | 10 | RAG-Evaluation, RAGAS & LLM-as-Judge |
-| `P11_Ethik_Sicherheit_Recht.ipynb` | 11 | EU AI Act, OWASP Top 10, Bias & Datenschutz |
-| `P12_Zusammenfassung_Wiederholung.ipynb` | 12 | Capstone-Session & Semester-Review |
+| Notebook                                                                                                                                              | Termin | Thema                                                                                                                                                        |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------|--------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `P01_Entwicklungsumgebung.ipynb`                                                                                                                      | 01 | Setup & Ollama-Grundlagen                                                                                                                                    |
+| `P02_Tokenizer_Embeddings_MLP.ipynb`                                                                                                                  | 02 | Tokenisierung, Embeddings & MLP                                                                                                                              |
+| `P03_Transformer_Attention.ipynb`                                                                                                                     | 03 | Transformer-Architektur & Attention                                                                                                                          |
+| `P04_Halluzinationen_Perplexity.ipynb`                                                                                                                | 04 | Halluzinationen & Perplexity                                                                                                                                 |
+| `P05_Prompting_InContextLearning.ipynb`                                                                                                               | 05 | Prompt-Engineering & In-Context Learning                                                                                                                     |
+| `P06_RAG_Systeme.ipynb`                                                                                                                               | 06 | RAG-Pipeline, ChromaDB, Chunking & Generation                                                                                                                |
+| `P07_Finetuning_PEFT.ipynb`<br/> Alternative:<br/> https://colab.research.google.com/github/unslothai/notebooks/blob/main/nb/Gemma3_(270M).ipynb      | 07 | LoRA, QLoRA & Parameter-Efficient Fine-Tuning  |
+| `P08_Hardware_Inferenz.ipynb`<br/> Alternative:<br/> https://colab.research.google.com/github/unslothai/notebooks/blob/main/nb/Gemma3_(1B)-GRPO.ipynb | 08 | GPU-Speicher, KV-Cache, Quantisierung     |
+| `P09_Agenten_MCP.ipynb`                                                                                                                               | 09 | ReAct-Pattern & Model Context Protocol                                                                                                                       |
+| `P10_Evaluation_Benchmarks.ipynb`                                                                                                                     | 10 | RAG-Evaluation, RAGAS & LLM-as-Judge                                                                                                                         |
+| `P11_Ethik_Sicherheit_Recht.ipynb`                                                                                                                    | 11 | EU AI Act, OWASP Top 10, Bias & Datenschutz                                                                                                                  |
+| `P12_Zusammenfassung_Wiederholung.ipynb`                                                                                                              | 12 | Capstone-Session & Semester-Review                                                                                                                           |
 
 ## Ausführungswege
 
