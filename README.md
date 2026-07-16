@@ -17,7 +17,7 @@ Dieses Repository enthält die Jupyter-Notebooks für das Praktikum im Sommersem
 | `P09_Agenten_MCP.ipynb`                                                                                                                               | 09 | ReAct-Pattern & Model Context Protocol                                                                                                                       |
 | `P10_Evaluation_Benchmarks.ipynb`                                                                                                                     | 10 | RAG-Evaluation, RAGAS & LLM-as-Judge                                                                                                                         |
 | `P11_Ethik_Sicherheit_Recht.ipynb`                                                                                                                    | 11 | EU AI Act, OWASP Top 10, Bias & Datenschutz                                                                                                                  |
-| `P12_Zusammenfassung_Wiederholung.ipynb`                                                                                                              | 12 | Capstone-Session & Semester-Review                                                                                                                           |
+
 
 ## Ausführungswege
 
@@ -98,7 +98,7 @@ Wenn Pakete fehlen, helfen die Setup-Zellen beim Installieren. Eine bestehende U
 
 ## Google Colab
 
-P01 bis P05 lassen sich auch in Colab als eigenständige Arbeitsblätter bearbeiten. Für P06 bis P12 ist die Referenzausführung lokal vorgesehen; diese Notebooks erwarten einen lokalen Ollama-Dienst über `OLLAMA_BASE_URL` und brechen bei entfernten Hosts absichtlich mit einem harten Fehler ab.
+P01 bis P05 lassen sich auch in Colab als eigenständige Arbeitsblätter bearbeiten. Für P06 bis P11 ist die Referenzausführung lokal vorgesehen; diese Notebooks erwarten einen lokalen Ollama-Dienst über `OLLAMA_BASE_URL` und brechen bei entfernten Hosts absichtlich mit einem harten Fehler ab.
 
 ### Voraussetzungen in Colab
 
@@ -219,7 +219,6 @@ Hinweise:
 9. `P09_Agenten_MCP.ipynb`
 10. `P10_Evaluation_Benchmarks.ipynb`
 11. `P11_Ethik_Sicherheit_Recht.ipynb`
-12. `P12_Zusammenfassung_Wiederholung.ipynb`
 
 ## Projektstruktur
 
